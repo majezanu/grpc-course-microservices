@@ -21,10 +21,18 @@ type Order struct {
 }
 
 func NewOrder(customerId int64, orderItems []OrderItem) Order {
+	var totalPrice float32
+	var totalQuantity int32
+	for _, item := range orderItems {
+		totalPrice += item.UnitPrice * float32(item.Quantity)
+		totalQuantity += item.Quantity
+	}
 	return Order{
-		CreatedAt:  time.Now().Unix(),
-		Status:     "Pending",
-		CustomerID: customerId,
-		OrderItems: orderItems,
+		CreatedAt:     time.Now().Unix(),
+		Status:        "Pending",
+		CustomerID:    customerId,
+		OrderItems:    orderItems,
+		TotalPrice:    totalPrice,
+		TotalQuantity: totalQuantity,
 	}
 }
